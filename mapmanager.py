@@ -1,4 +1,5 @@
 class Mapmanager():
+    """ Управление картой """
     def __init__(self):
         self.model = 'block' # модель кубика лежит в файле block.egg
         # # используются следующие текстуры:
@@ -15,6 +16,7 @@ class Mapmanager():
 
 
     def startNew(self):
+        """создаёт основу для новой карты"""
         self.land = render.attachNewNode("Land") # узел, к которому привязаны все блоки карты
 
 
@@ -24,6 +26,7 @@ class Mapmanager():
         else:
             return self.colors[len(self.colors) - 1]
 
+
     def addBlock(self, position):
         # создаём строительные блоки
         self.block = loader.loadModel(self.model)
@@ -31,6 +34,11 @@ class Mapmanager():
         self.block.setPos(position)
         self.color = self.getColor(int(position[2]))
         self.block.setColor(self.color)
+
+
+        self.block.setTag("at", str(position))
+
+
         self.block.reparentTo(self.land)
 
 
@@ -53,3 +61,5 @@ class Mapmanager():
                         block = self.addBlock((x, y, z0))
                     x += 1
                 y += 1
+        return x,y
+    
